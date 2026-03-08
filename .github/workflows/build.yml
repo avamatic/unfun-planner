@@ -37,7 +37,9 @@ jobs:
         run: git clone --depth 1 https://github.com/xNVSE/NVSE.git xNVSE
 
       - name: Configure CMake (Win32)
-        run: cmake -B build -S extractor -A Win32 -DNVSE_ROOT=xNVSE
+        env:
+          NVSE_PATH: ${{ github.workspace }}/xNVSE
+        run: cmake -B build -S extractor -A Win32 "-DNVSE_ROOT=$env:NVSE_PATH"
 
       - name: Build
         run: cmake --build build --config Release
