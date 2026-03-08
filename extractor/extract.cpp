@@ -9,44 +9,70 @@
 #include <fstream>
 #include <ctime>
 #include <cstdio>
+#include <cctype>
 
 #ifndef _MESSAGE
 #define _MESSAGE(...)
 #endif
 
-// Actor Value indices
-// SPECIAL: 0=Strength, 1=Perception, 2=Endurance, 3=Charisma, 4=Intelligence, 5=Agility, 6=Luck
-// Skills: 12=Barter, 13=BigGuns(unused), 14=EnergyWeapons, 15=Explosives, 16=Lockpick,
-//         17=Medicine, 18=MeleeWeapons, 19=Repair, 20=Science, 21=Sneak,
-//         22=Speech, 23=Survival, 24=Guns, 25=Unarmed
+// FNV Actor Value indices (verified against runtime extraction)
+// SPECIAL stats: AV 5-11
+static const int AV_STRENGTH     = 5;
+static const int AV_PERCEPTION   = 6;
+static const int AV_ENDURANCE    = 7;
+static const int AV_CHARISMA     = 8;
+static const int AV_INTELLIGENCE = 9;
+static const int AV_AGILITY      = 10;
+static const int AV_LUCK         = 11;
 
-static const int AV_SPECIAL_START = 0;
-static const int AV_SPECIAL_END = 6;  // inclusive
-static const int AV_SKILLS_START = 12;
-static const int AV_SKILLS_END = 25;  // inclusive (skip 13 = BigGuns, unused in FNV)
+// Skills: AV 38-51 (39 = Big Guns, unused in FNV)
+static const int AV_SKILLS_START = 38;
+static const int AV_SKILLS_END   = 51;
+static const int AV_BIG_GUNS     = 39; // unused in FNV
 
 static const char* SPECIAL_ABBREVS[] = {"ST", "PE", "EN", "CH", "IN", "AG", "LK"};
-static const char* SPECIAL_NAMES[] = {"Strength", "Perception", "Endurance", "Charisma", "Intelligence", "Agility", "Luck"};
+static const char* SPECIAL_NAMES[]   = {"Strength", "Perception", "Endurance", "Charisma", "Intelligence", "Agility", "Luck"};
 
-// Governing SPECIAL for each skill (AV index 12-25)
-// Maps skill AV index -> SPECIAL AV index
-static int GetGoverningSpecial(int skillAV) {
+// Governing SPECIAL for each skill (AV index 38-51)
+static int GetGoverningSpecialIndex(int skillAV) {
 	switch (skillAV) {
-		case 12: return 3; // Barter -> CH
-		case 14: return 1; // Energy Weapons -> PE
-		case 15: return 1; // Explosives -> PE
-		case 16: return 1; // Lockpick -> PE
-		case 17: return 4; // Medicine -> IN
-		case 18: return 0; // Melee Weapons -> ST
-		case 19: return 4; // Repair -> IN
-		case 20: return 4; // Science -> IN
-		case 21: return 5; // Sneak -> AG
-		case 22: return 3; // Speech -> CH
-		case 23: return 2; // Survival -> EN
-		case 24: return 5; // Guns -> AG
-		case 25: return 2; // Unarmed -> EN
+		case 38: return 3; // Barter -> CH
+		case 40: return 1; // Energy Weapons -> PE
+		case 41: return 1; // Explosives -> PE
+		case 42: return 1; // Lockpick -> PE
+		case 43: return 4; // Medicine -> IN
+		case 44: return 0; // Melee Weapons -> ST
+		case 45: return 4; // Repair -> IN
+		case 46: return 4; // Science -> IN
+		case 47: return 5; // Guns -> AG
+		case 48: return 5; // Sneak -> AG
+		case 49: return 3; // Speech -> CH
+		case 50: return 2; // Survival -> EN
+		case 51: return 2; // Unarmed -> EN
 		default: return -1;
 	}
+}
+
+// Generate a PascalCase editor ID from a display name.
+// "Energy Weapons" -> "EnergyWeapons", "Ain't Like That Now" -> "AintLikeThatNow"
+static std::string GenerateEditorId(const char* name) {
+	if (!name || !name[0]) return "";
+	std::string result;
+	bool capitalizeNext = true;
+	for (const char* p = name; *p; p++) {
+		if (*p == ' ' || *p == '-') {
+			capitalizeNext = true;
+		} else if (std::isalnum((unsigned char)*p)) {
+			if (capitalizeNext) {
+				result += (char)std::toupper((unsigned char)*p);
+				capitalizeNext = false;
+			} else {
+				result += *p;
+			}
+		}
+		// skip apostrophes, punctuation, etc.
+	}
+	return result;
 }
 
 // Forward declarations
@@ -65,45 +91,35 @@ bool ExtractAllBuildData(const char* outputPath)
 
 	jw.beginObject();
 
-	// metadata
 	jw.key("metadata");
 	WriteMetadata(jw);
 
-	// special_attributes
 	jw.key("special_attributes");
 	WriteSpecialAttributes(jw);
 
-	// skills
 	jw.key("skills");
 	WriteSkills(jw);
 
-	// perks (non-traits)
 	jw.key("perks");
 	WritePerks(jw, false);
 
-	// traits
 	jw.key("traits");
 	WritePerks(jw, true);
 
-	// implants
 	jw.key("implants");
 	WriteImplants(jw);
 
-	// skill_books
 	jw.key("skill_books");
 	WriteSkillBooks(jw);
 
-	// skill_magazines
 	jw.key("skill_magazines");
 	WriteSkillMagazines(jw);
 
-	// leveling
 	jw.key("leveling");
 	WriteLeveling(jw);
 
 	jw.endObject();
 
-	// Write to file
 	std::ofstream outFile(outputPath);
 	if (!outFile.is_open()) {
 		_MESSAGE("BuildDataExtractor: Failed to open %s for writing", outputPath);
@@ -126,7 +142,7 @@ static void WriteMetadata(JsonWriter& jw)
 	jw.valueString("1.4.0.525");
 
 	jw.key("extractor_version");
-	jw.valueString("1.0.0");
+	jw.valueString("1.1.0");
 
 	jw.key("load_order");
 	jw.beginArray();
@@ -141,7 +157,6 @@ static void WriteMetadata(JsonWriter& jw)
 	}
 	jw.endArray();
 
-	// Extraction timestamp
 	jw.key("extraction_date");
 	time_t now = time(nullptr);
 	char timeBuf[64];
@@ -155,7 +170,7 @@ static void WriteMetadata(JsonWriter& jw)
 static void WriteSpecialAttributes(JsonWriter& jw)
 {
 	jw.beginArray();
-	for (int i = AV_SPECIAL_START; i <= AV_SPECIAL_END; i++) {
+	for (int i = 0; i < 7; i++) {
 		jw.beginObject();
 		jw.key("name");
 		jw.valueString(SPECIAL_NAMES[i]);
@@ -177,21 +192,26 @@ static void WriteSkills(JsonWriter& jw)
 {
 	jw.beginArray();
 	for (int i = AV_SKILLS_START; i <= AV_SKILLS_END; i++) {
-		if (i == 13) continue; // BigGuns — unused in FNV
+		if (i == AV_BIG_GUNS) continue; // unused in FNV
 
 		ActorValueInfo* av = GetActorValueInfo(i);
 		if (!av) continue;
 
-		int governing = GetGoverningSpecial(i);
-		const char* govAbbrev = (governing >= 0) ? SPECIAL_ABBREVS[governing] : "??";
+		const char* name = av->GetTheName();
+		if (!name || !name[0]) continue;
+
+		int govIdx = GetGoverningSpecialIndex(i);
+		const char* govAbbrev = (govIdx >= 0) ? SPECIAL_ABBREVS[govIdx] : "??";
 
 		jw.beginObject();
 
 		jw.key("name");
-		jw.valueString(av->GetTheName());
+		jw.valueString(name);
 
 		jw.key("editor_id");
-		jw.valueString(av->GetEditorID());
+		// GetEditorID() returns empty at runtime; generate from name
+		std::string edid = GenerateEditorId(name);
+		jw.valueString(edid.c_str());
 
 		jw.key("form_id");
 		char formIdBuf[16];
@@ -201,9 +221,8 @@ static void WriteSkills(JsonWriter& jw)
 		jw.key("governing_special");
 		jw.valueString(govAbbrev);
 
-		// Formula: 2 + (governing * 2) + ceil(luck / 2)
 		char formulaBuf[128];
-		const char* govName = (governing >= 0) ? SPECIAL_NAMES[governing] : "unknown";
+		const char* govName = (govIdx >= 0) ? SPECIAL_NAMES[govIdx] : "unknown";
 		snprintf(formulaBuf, sizeof(formulaBuf),
 			"2 + (%s * 2) + ceil(luck / 2)", govName);
 		jw.key("base_value_formula");
@@ -231,26 +250,27 @@ static void WritePerks(JsonWriter& jw, bool traitsOnly)
 		bool isTrait = (perk->data.isTrait != 0);
 		if (traitsOnly != isTrait) continue;
 
-		// Skip non-playable perks (unless they're traits)
 		if (!traitsOnly && !perk->data.isPlayable) continue;
+
+		const char* name = perk->GetTheName();
+		if (!name || !name[0]) continue;
 
 		jw.beginObject();
 
 		jw.key("name");
-		jw.valueString(perk->GetTheName());
+		jw.valueString(name);
 
 		jw.key("editor_id");
-		jw.valueString(perk->GetEditorID());
+		std::string edid = GenerateEditorId(name);
+		jw.valueString(edid.c_str());
 
 		jw.key("form_id");
 		char formIdBuf[16];
 		snprintf(formIdBuf, sizeof(formIdBuf), "%08X", perk->refID);
 		jw.valueString(formIdBuf);
 
-		// Description — use GetDescription if available
 		jw.key("description");
-		const char* desc = perk->GetTheName(); // fallback to name
-		jw.valueString(desc);
+		jw.valueString(name); // fallback — runtime descriptions need further work
 
 		if (!traitsOnly) {
 			jw.key("max_ranks");
@@ -263,8 +283,8 @@ static void WritePerks(JsonWriter& jw, bool traitsOnly)
 			jw.valueBool(perk->data.isPlayable != 0);
 
 			// Prerequisites — condition parsing requires xNVSE-internal struct
-			// layouts that aren't fully exposed in public headers.
-			// The level requirement is extracted above; detailed SPECIAL/skill/perk
+			// layouts not fully exposed in public headers.
+			// Level requirement is extracted above; detailed SPECIAL/skill/perk
 			// prerequisites are available in the reference data JSON.
 			jw.key("prerequisites");
 			jw.beginObject();
@@ -277,14 +297,12 @@ static void WritePerks(JsonWriter& jw, bool traitsOnly)
 			jw.key("perks");
 			jw.beginArray();
 			jw.endArray();
-			jw.endObject(); // prerequisites
+			jw.endObject();
 		}
 
-		// Effects — for traits, extract the effects list
 		if (traitsOnly) {
 			jw.key("effects");
 			jw.beginArray();
-			// Trait effects are stored as perk entry points
 			auto entryIter = perk->entries.Begin();
 			for (; !entryIter.End(); ++entryIter) {
 				BGSPerkEntry* entry = entryIter.Get();
@@ -293,7 +311,7 @@ static void WritePerks(JsonWriter& jw, bool traitsOnly)
 				jw.key("type");
 				jw.valueString("other");
 				jw.key("description");
-				jw.valueString(""); // Perk entries need specific parsing per type
+				jw.valueString("");
 				jw.endObject();
 			}
 			jw.endArray();
@@ -306,7 +324,8 @@ static void WritePerks(JsonWriter& jw, bool traitsOnly)
 }
 
 // --- Implants ---
-// Implant perks are identified by editor ID prefix "Implant"
+// At runtime, editor IDs are stripped. Detect implants by name prefix "Implant"
+// which matches vanilla FNV implant perks.
 static void WriteImplants(JsonWriter& jw)
 {
 	DataHandler* dh = DataHandler::Get();
@@ -318,17 +337,30 @@ static void WriteImplants(JsonWriter& jw)
 			BGSPerk* perk = iter.Get();
 			if (!perk) continue;
 
-			const char* edid = perk->GetEditorID();
-			if (!edid) continue;
+			const char* name = perk->GetTheName();
+			if (!name) continue;
 
-			// Implant perks in vanilla FNV have editor IDs starting with "Implant"
-			std::string edidStr(edid);
-			if (edidStr.find("Implant") != 0) continue;
+			std::string nameStr(name);
+			// Vanilla implant perks are named "Implant C-##" or similar
+			// Also check for sub-dermal armor, monocyte breeder, etc.
+			bool isImplant = (nameStr.find("Implant") == 0);
+			if (!isImplant) {
+				// Check for the non-SPECIAL implants by known names
+				if (nameStr == "Sub-Dermal Armor" ||
+				    nameStr == "Monocyte Breeder") {
+					isImplant = true;
+				}
+			}
+			if (!isImplant) continue;
 
 			jw.beginObject();
 
 			jw.key("name");
-			jw.valueString(perk->GetTheName());
+			jw.valueString(name);
+
+			jw.key("editor_id");
+			std::string edid = GenerateEditorId(name);
+			jw.valueString(edid.c_str());
 
 			jw.key("form_id");
 			char formIdBuf[16];
@@ -338,36 +370,60 @@ static void WriteImplants(JsonWriter& jw)
 			jw.key("effects");
 			jw.beginArray();
 			jw.beginObject();
-			jw.key("type");
 
-			// Determine if this is a SPECIAL implant or derived stat
-			if (edidStr.find("ImplantSTR") != std::string::npos ||
-			    edidStr.find("ImplantPER") != std::string::npos ||
-			    edidStr.find("ImplantEND") != std::string::npos ||
-			    edidStr.find("ImplantCHA") != std::string::npos ||
-			    edidStr.find("ImplantINT") != std::string::npos ||
-			    edidStr.find("ImplantAGI") != std::string::npos ||
-			    edidStr.find("ImplantLCK") != std::string::npos) {
+			// Determine effect type from name
+			jw.key("type");
+			if (nameStr.find("Implant") == 0 &&
+			    nameStr != "Sub-Dermal Armor" &&
+			    nameStr != "Monocyte Breeder" &&
+			    nameStr.find("GRX") == std::string::npos) {
 				jw.valueString("special_modifier");
 			} else {
 				jw.valueString("derived_stat");
 			}
 
+			// Determine target from name
 			jw.key("target");
-			if (edidStr.find("STR") != std::string::npos) jw.valueString("ST");
-			else if (edidStr.find("PER") != std::string::npos) jw.valueString("PE");
-			else if (edidStr.find("END") != std::string::npos) jw.valueString("EN");
-			else if (edidStr.find("CHA") != std::string::npos) jw.valueString("CH");
-			else if (edidStr.find("INT") != std::string::npos) jw.valueString("IN");
-			else if (edidStr.find("AGI") != std::string::npos) jw.valueString("AG");
-			else if (edidStr.find("LCK") != std::string::npos) jw.valueString("LK");
-			else jw.valueString(perk->GetTheName());
+			if (nameStr.find("Strength") != std::string::npos ||
+			    nameStr.find("STR") != std::string::npos ||
+			    nameStr.find("C-13") != std::string::npos)
+				jw.valueString("ST");
+			else if (nameStr.find("Perception") != std::string::npos ||
+			         nameStr.find("PER") != std::string::npos ||
+			         nameStr.find("C-14") != std::string::npos)
+				jw.valueString("PE");
+			else if (nameStr.find("Endurance") != std::string::npos ||
+			         nameStr.find("END") != std::string::npos ||
+			         nameStr.find("C-15") != std::string::npos)
+				jw.valueString("EN");
+			else if (nameStr.find("Charisma") != std::string::npos ||
+			         nameStr.find("CHA") != std::string::npos ||
+			         nameStr.find("C-16") != std::string::npos)
+				jw.valueString("CH");
+			else if (nameStr.find("Intelligence") != std::string::npos ||
+			         nameStr.find("INT") != std::string::npos ||
+			         nameStr.find("C-17") != std::string::npos)
+				jw.valueString("IN");
+			else if (nameStr.find("Agility") != std::string::npos ||
+			         nameStr.find("AGI") != std::string::npos ||
+			         nameStr.find("C-18") != std::string::npos)
+				jw.valueString("AG");
+			else if (nameStr.find("Luck") != std::string::npos ||
+			         nameStr.find("LCK") != std::string::npos ||
+			         nameStr.find("C-19") != std::string::npos)
+				jw.valueString("LK");
+			else if (nameStr == "Sub-Dermal Armor")
+				jw.valueString("DT");
+			else if (nameStr == "Monocyte Breeder")
+				jw.valueString("HP_REGEN");
+			else
+				jw.valueString(name);
 
 			jw.key("magnitude");
-			jw.valueInt(1); // All SPECIAL implants are +1
+			jw.valueInt(1);
 
 			jw.key("description");
-			jw.valueString(perk->GetTheName());
+			jw.valueString(name);
 
 			jw.endObject();
 			jw.endArray(); // effects
@@ -381,20 +437,14 @@ static void WriteImplants(JsonWriter& jw)
 
 // --- Skill Books ---
 // TESObjectBOOK is only forward-declared in xNVSE headers (not fully defined).
-// We cannot access book-specific fields at compile time.
-// The reference data file (fnv_vanilla_data.json) already contains skill book data,
-// so we output an empty array here. A future version could use raw memory offsets.
+// Skill book data is available in the reference JSON instead.
 static void WriteSkillBooks(JsonWriter& jw)
 {
 	jw.beginArray();
-	// TESObjectBOOK is not fully defined in xNVSE public headers.
-	// Skill book data is available in the reference JSON instead.
 	jw.endArray();
 }
 
 // --- Skill Magazines ---
-// Magazines are ingestibles with script effects — hard to auto-detect from forms.
-// The reference data file already has this covered.
 static void WriteSkillMagazines(JsonWriter& jw)
 {
 	jw.beginArray();
