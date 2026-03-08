@@ -14,10 +14,15 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <map>
+#include <set>
+#include <list>
 #include <unordered_map>
+#include <unordered_set>
 #include <tuple>
 #include <algorithm>
 #include <functional>
+#include <memory>
 
 // xNVSE base integer types
 #include "common/ITypes.h"

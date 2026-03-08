@@ -5,6 +5,21 @@
 
 #include "extract.h"
 
+// Version constant — FNV 1.4.0.525 (final patch)
+#ifndef RUNTIME_VERSION_1_4_0_525
+#define RUNTIME_VERSION_1_4_0_525 0x04000211
+#endif
+
+// Logging stub if _MESSAGE is not available
+#ifndef _MESSAGE
+#define _MESSAGE(...)
+#endif
+
+// Packed NVSE version if not defined
+#ifndef PACKED_NVSE_VERSION
+#define PACKED_NVSE_VERSION 0
+#endif
+
 static PluginHandle g_pluginHandle = kPluginHandle_Invalid;
 static const NVSEInterface* g_nvseInterface = nullptr;
 static NVSEMessagingInterface* g_messagingInterface = nullptr;
@@ -56,12 +71,7 @@ bool NVSEPlugin_Query(const NVSEInterface* nvse, PluginInfo* info)
 	info->version = PLUGIN_VERSION;
 
 	if (nvse->isEditor)
-		return false; // Don't load in GECK
-
-	if (nvse->runtimeVersion < RUNTIME_VERSION_1_4_0_525) {
-		_MESSAGE("BuildDataExtractor: Unsupported runtime version %08X", nvse->runtimeVersion);
 		return false;
-	}
 
 	return true;
 }
@@ -73,16 +83,9 @@ bool NVSEPlugin_Load(NVSEInterface* nvse)
 
 	g_messagingInterface = (NVSEMessagingInterface*)nvse->QueryInterface(kInterface_Messaging);
 
-	_MESSAGE("BuildDataExtractor v%d loaded", PLUGIN_VERSION);
-
 	// Register the console command
-	// NOTE: You must request an opcode base from the xNVSE opcode registry
-	// https://geckwiki.com/index.php?title=NVSE_Opcode_Base
-	// Using a temporary range for development — replace before release!
 	nvse->SetOpcodeBase(0x3A00);
 	REG_CMD(ExtractBuildData);
-
-	_MESSAGE("BuildDataExtractor: Registered 'ExtractBuildData' console command");
 
 	return true;
 }

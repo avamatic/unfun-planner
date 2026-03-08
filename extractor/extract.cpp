@@ -10,6 +10,10 @@
 #include <ctime>
 #include <cstdio>
 
+#ifndef _MESSAGE
+#define _MESSAGE(...)
+#endif
+
 // Actor Value indices
 // SPECIAL: 0=Strength, 1=Perception, 2=Endurance, 3=Charisma, 4=Intelligence, 5=Agility, 6=Luck
 // Skills: 12=Barter, 13=BigGuns(unused), 14=EnergyWeapons, 15=Explosives, 16=Lockpick,
