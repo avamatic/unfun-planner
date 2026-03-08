@@ -34,6 +34,35 @@ static ParamInfo kParams_OneOptionalString[] = {
 	{"string", kParamType_String, 1}, // optional
 };
 
+static bool g_extractedThisSession = false;
+
+static void RunAutoExtract()
+{
+	if (g_extractedThisSession) return;
+	g_extractedThisSession = true;
+
+	const char* path = "Data\\build_data.json";
+	Console_Print("BuildDataExtractor: Auto-extracting game data...");
+
+	bool success = ExtractAllBuildData(path);
+
+	if (success) {
+		Console_Print("BuildDataExtractor: Data written to %s", path);
+	} else {
+		Console_Print("BuildDataExtractor: Auto-extraction failed!");
+	}
+}
+
+static void MessageHandler(NVSEMessagingInterface::Message* msg)
+{
+	switch (msg->type) {
+		case NVSEMessagingInterface::kMessage_PostLoadGame:
+		case NVSEMessagingInterface::kMessage_NewGame:
+			RunAutoExtract();
+			break;
+	}
+}
+
 #if RUNTIME
 
 bool Cmd_ExtractBuildData_Execute(COMMAND_ARGS)
@@ -86,7 +115,12 @@ bool NVSEPlugin_Load(NVSEInterface* nvse)
 
 	g_messagingInterface = (NVSEMessagingInterface*)nvse->QueryInterface(kInterface_Messaging);
 
-	// Register the console command
+	// Register message handler for auto-extraction on game load
+	if (g_messagingInterface) {
+		g_messagingInterface->RegisterListener(g_pluginHandle, "NVSE", MessageHandler);
+	}
+
+	// Register the console command (still available for manual use)
 	nvse->SetOpcodeBase(0x3A00);
 	REG_CMD(ExtractBuildData);
 
