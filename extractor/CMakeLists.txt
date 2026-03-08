@@ -73,6 +73,7 @@ set(PLUGIN_SOURCES
     main.cpp
     extract.cpp
     json_writer.cpp
+    stubs.cpp
 )
 
 # Filter common sources too
