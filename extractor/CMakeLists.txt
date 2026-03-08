@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(BuildDataExtractor LANGUAGES CXX)
+project(BuildDataExtractor LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # xNVSE source location — set via -DNVSE_ROOT=<path> or auto-detected
 # Expected layout: NVSE_ROOT/nvse/nvse/PluginAPI.h
 if(NOT NVSE_ROOT)
-    # Check common locations
     if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../xNVSE/nvse/nvse/PluginAPI.h")
         set(NVSE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../xNVSE")
     elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/xNVSE/nvse/nvse/PluginAPI.h")
@@ -28,16 +27,39 @@ set(NVSE_DIR "${NVSE_ROOT}/nvse/nvse")
 set(NVSE_COMMON_DIR "${NVSE_ROOT}/common")
 
 # --- xNVSE source files compiled into the plugin ---
+# Must match what nvse_plugin_example.vcxproj compiles
 set(NVSE_SOURCES
+    ${NVSE_DIR}/containers.cpp
     ${NVSE_DIR}/GameAPI.cpp
+    ${NVSE_DIR}/GameBSExtraData.cpp
     ${NVSE_DIR}/GameData.cpp
+    ${NVSE_DIR}/GameExtraData.cpp
     ${NVSE_DIR}/GameForms.cpp
     ${NVSE_DIR}/GameObjects.cpp
+    ${NVSE_DIR}/GameOSDepend.cpp
+    ${NVSE_DIR}/GameProcess.cpp
+    ${NVSE_DIR}/GameRTTI.cpp
+    ${NVSE_DIR}/GameScript.cpp
+    ${NVSE_DIR}/GameSettings.cpp
+    ${NVSE_DIR}/GameTasks.cpp
+    ${NVSE_DIR}/GameTiles.cpp
     ${NVSE_DIR}/GameTypes.cpp
-    ${NVSE_DIR}/CommandTable.cpp
+    ${NVSE_DIR}/NiTypes.cpp
+    ${NVSE_DIR}/printf.cpp
+    ${NVSE_DIR}/SafeWrite.cpp
     ${NVSE_DIR}/Utilities.cpp
-    ${NVSE_DIR}/GameBSExtraData.cpp
+    ${NVSE_DIR}/utility.cpp
 )
+
+# Filter out any that don't exist (in case of version differences)
+set(NVSE_SOURCES_FILTERED)
+foreach(src ${NVSE_SOURCES})
+    if(EXISTS "${src}")
+        list(APPEND NVSE_SOURCES_FILTERED "${src}")
+    else()
+        message(WARNING "xNVSE source not found, skipping: ${src}")
+    endif()
+endforeach()
 
 # --- Plugin source files ---
 set(PLUGIN_SOURCES
@@ -48,7 +70,7 @@ set(PLUGIN_SOURCES
 
 add_library(BuildDataExtractor SHARED
     ${PLUGIN_SOURCES}
-    ${NVSE_SOURCES}
+    ${NVSE_SOURCES_FILTERED}
     exports.def
 )
 
@@ -64,6 +86,8 @@ target_compile_definitions(BuildDataExtractor PRIVATE RUNTIME)
 
 if(MSVC)
     target_compile_options(BuildDataExtractor PRIVATE /W3 /MP)
+    # Force-include base types header so UInt8/UInt32/etc. are available everywhere
+    target_compile_options(BuildDataExtractor PRIVATE /FI"common/ITypes.h")
 endif()
 
 set_target_properties(BuildDataExtractor PROPERTIES
