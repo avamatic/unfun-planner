@@ -25,30 +25,30 @@ static const int AV_INTELLIGENCE = 9;
 static const int AV_AGILITY      = 10;
 static const int AV_LUCK         = 11;
 
-// Skills: AV 38-51 (39 = Big Guns, unused in FNV)
-static const int AV_SKILLS_START = 38;
-static const int AV_SKILLS_END   = 51;
-static const int AV_BIG_GUNS     = 39; // unused in FNV
+// Skills: AV 32-45 (33 = Big Guns, unused in FNV)
+static const int AV_SKILLS_START = 32;
+static const int AV_SKILLS_END   = 45;
+static const int AV_BIG_GUNS     = 33; // unused in FNV
 
 static const char* SPECIAL_ABBREVS[] = {"ST", "PE", "EN", "CH", "IN", "AG", "LK"};
 static const char* SPECIAL_NAMES[]   = {"Strength", "Perception", "Endurance", "Charisma", "Intelligence", "Agility", "Luck"};
 
-// Governing SPECIAL for each skill (AV index 38-51)
+// Governing SPECIAL for each skill (AV index 32-45)
 static int GetGoverningSpecialIndex(int skillAV) {
 	switch (skillAV) {
-		case 38: return 3; // Barter -> CH
-		case 40: return 1; // Energy Weapons -> PE
-		case 41: return 1; // Explosives -> PE
-		case 42: return 1; // Lockpick -> PE
-		case 43: return 4; // Medicine -> IN
-		case 44: return 0; // Melee Weapons -> ST
-		case 45: return 4; // Repair -> IN
-		case 46: return 4; // Science -> IN
-		case 47: return 5; // Guns -> AG
-		case 48: return 5; // Sneak -> AG
-		case 49: return 3; // Speech -> CH
-		case 50: return 2; // Survival -> EN
-		case 51: return 2; // Unarmed -> EN
+		case 32: return 3; // Barter -> CH
+		case 34: return 1; // Energy Weapons -> PE
+		case 35: return 1; // Explosives -> PE
+		case 36: return 1; // Lockpick -> PE
+		case 37: return 4; // Medicine -> IN
+		case 38: return 0; // Melee Weapons -> ST
+		case 39: return 4; // Repair -> IN
+		case 40: return 4; // Science -> IN
+		case 41: return 5; // Guns -> AG
+		case 42: return 5; // Sneak -> AG
+		case 43: return 3; // Speech -> CH
+		case 44: return 2; // Survival -> EN
+		case 45: return 2; // Unarmed -> EN
 		default: return -1;
 	}
 }
@@ -382,40 +382,16 @@ static void WriteImplants(JsonWriter& jw)
 				jw.valueString("derived_stat");
 			}
 
-			// Determine target from name
+			// Map implant to target by name
+			// Note: vanilla SPECIAL implants (+1 to stats) are script-based,
+			// not perk forms. These are the perk-based implants only.
 			jw.key("target");
-			if (nameStr.find("Strength") != std::string::npos ||
-			    nameStr.find("STR") != std::string::npos ||
-			    nameStr.find("C-13") != std::string::npos)
-				jw.valueString("ST");
-			else if (nameStr.find("Perception") != std::string::npos ||
-			         nameStr.find("PER") != std::string::npos ||
-			         nameStr.find("C-14") != std::string::npos)
-				jw.valueString("PE");
-			else if (nameStr.find("Endurance") != std::string::npos ||
-			         nameStr.find("END") != std::string::npos ||
-			         nameStr.find("C-15") != std::string::npos)
-				jw.valueString("EN");
-			else if (nameStr.find("Charisma") != std::string::npos ||
-			         nameStr.find("CHA") != std::string::npos ||
-			         nameStr.find("C-16") != std::string::npos)
-				jw.valueString("CH");
-			else if (nameStr.find("Intelligence") != std::string::npos ||
-			         nameStr.find("INT") != std::string::npos ||
-			         nameStr.find("C-17") != std::string::npos)
-				jw.valueString("IN");
-			else if (nameStr.find("Agility") != std::string::npos ||
-			         nameStr.find("AGI") != std::string::npos ||
-			         nameStr.find("C-18") != std::string::npos)
-				jw.valueString("AG");
-			else if (nameStr.find("Luck") != std::string::npos ||
-			         nameStr.find("LCK") != std::string::npos ||
-			         nameStr.find("C-19") != std::string::npos)
-				jw.valueString("LK");
-			else if (nameStr == "Sub-Dermal Armor")
+			if (nameStr == "Sub-Dermal Armor")
 				jw.valueString("DT");
 			else if (nameStr == "Monocyte Breeder")
 				jw.valueString("HP_REGEN");
+			else if (nameStr.find("C-13") != std::string::npos)
+				jw.valueString("ST");
 			else
 				jw.valueString(name);
 
