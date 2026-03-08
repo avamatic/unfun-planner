@@ -19,6 +19,9 @@ if(NOT NVSE_ROOT)
     endif()
 endif()
 
+# Normalize backslashes to forward slashes (Windows paths break CMake string parsing)
+cmake_path(SET NVSE_ROOT NORMALIZE "${NVSE_ROOT}")
+
 message(STATUS "Using xNVSE source from: ${NVSE_ROOT}")
 
 set(NVSE_DIR "${NVSE_ROOT}/nvse/nvse")
