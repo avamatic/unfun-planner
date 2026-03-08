@@ -27,10 +27,10 @@ set(NVSE_DIR "${NVSE_ROOT}/nvse/nvse")
 set(NVSE_COMMON_DIR "${NVSE_ROOT}/common")
 
 # --- xNVSE common library sources ---
+# IFileStream.cpp needs <commdlg.h> (excluded by WIN32_LEAN_AND_MEAN) — skip it.
+# IErrors.cpp is only needed if we hit linker errors for it.
 set(NVSE_COMMON_SOURCES
     ${NVSE_COMMON_DIR}/IDebugLog.cpp
-    ${NVSE_COMMON_DIR}/IFileStream.cpp
-    ${NVSE_COMMON_DIR}/IErrors.cpp
 )
 
 # --- xNVSE source files compiled into the plugin ---
