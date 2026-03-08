@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  planner:
+    name: Build Rust Planner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --release --manifest-path planner/Cargo.toml
+
+      - name: Test
+        run: cargo test --manifest-path planner/Cargo.toml
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnv-planner-linux
+          path: planner/target/release/fnv-planner
+
+  extractor:
+    name: Build xNVSE Extractor
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone xNVSE source
+        run: git clone --depth 1 https://github.com/xNVSE/NVSE.git xNVSE
+
+      - name: Configure CMake (Win32)
+        run: cmake -B build -S extractor -A Win32 -DNVSE_ROOT=xNVSE
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Upload plugin DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: BuildDataExtractor
+          path: build/Release/BuildDataExtractor.dll

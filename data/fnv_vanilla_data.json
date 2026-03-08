@@ -1,0 +1,1577 @@
+{
+  "metadata": {
+    "game_version": "1.4.0.525",
+    "extractor_version": "manual-reference-v1",
+    "load_order": ["FalloutNV.esm"],
+    "extraction_date": "2026-03-08T00:00:00Z",
+    "notes": "Vanilla FNV base game only, no DLC. Data sourced from Fallout Wiki."
+  },
+  "special_attributes": [
+    { "name": "Strength", "abbreviation": "ST", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Perception", "abbreviation": "PE", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Endurance", "abbreviation": "EN", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Charisma", "abbreviation": "CH", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Intelligence", "abbreviation": "IN", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Agility", "abbreviation": "AG", "default_value": 5, "min_value": 1, "max_value": 10 },
+    { "name": "Luck", "abbreviation": "LK", "default_value": 5, "min_value": 1, "max_value": 10 }
+  ],
+  "skills": [
+    {
+      "name": "Barter",
+      "editor_id": "Barter",
+      "form_id": "00000E",
+      "governing_special": "CH",
+      "base_value_formula": "2 + (charisma * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Energy Weapons",
+      "editor_id": "EnergyWeapons",
+      "form_id": "00000F",
+      "governing_special": "PE",
+      "base_value_formula": "2 + (perception * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Explosives",
+      "editor_id": "Explosives",
+      "form_id": "000010",
+      "governing_special": "PE",
+      "base_value_formula": "2 + (perception * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Guns",
+      "editor_id": "Guns",
+      "form_id": "000011",
+      "governing_special": "AG",
+      "base_value_formula": "2 + (agility * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Lockpick",
+      "editor_id": "Lockpick",
+      "form_id": "000012",
+      "governing_special": "PE",
+      "base_value_formula": "2 + (perception * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Medicine",
+      "editor_id": "Medicine",
+      "form_id": "000013",
+      "governing_special": "IN",
+      "base_value_formula": "2 + (intelligence * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Melee Weapons",
+      "editor_id": "MeleeWeapons",
+      "form_id": "000014",
+      "governing_special": "ST",
+      "base_value_formula": "2 + (strength * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Repair",
+      "editor_id": "Repair",
+      "form_id": "000015",
+      "governing_special": "IN",
+      "base_value_formula": "2 + (intelligence * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Science",
+      "editor_id": "Science",
+      "form_id": "000016",
+      "governing_special": "IN",
+      "base_value_formula": "2 + (intelligence * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Sneak",
+      "editor_id": "Sneak",
+      "form_id": "000017",
+      "governing_special": "AG",
+      "base_value_formula": "2 + (agility * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Speech",
+      "editor_id": "Speech",
+      "form_id": "000018",
+      "governing_special": "CH",
+      "base_value_formula": "2 + (charisma * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Survival",
+      "editor_id": "Survival",
+      "form_id": "000019",
+      "governing_special": "EN",
+      "base_value_formula": "2 + (endurance * 2) + ceil(luck / 2)"
+    },
+    {
+      "name": "Unarmed",
+      "editor_id": "Unarmed",
+      "form_id": "00001A",
+      "governing_special": "EN",
+      "base_value_formula": "2 + (endurance * 2) + ceil(luck / 2)"
+    }
+  ],
+  "perks": [
+    {
+      "name": "Black Widow",
+      "editor_id": "BlackWidow",
+      "form_id": "00094EB2",
+      "description": "+10% damage to male enemies, unique dialogue options with men.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+10% damage vs male enemies" }],
+      "is_playable": true,
+      "gender_requirement": "female"
+    },
+    {
+      "name": "Cherchez La Femme",
+      "editor_id": "CherchezLaFemme",
+      "form_id": "001361",
+      "description": "+10% damage to female enemies, unique dialogue options with women.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+10% damage vs female enemies" }],
+      "is_playable": true,
+      "gender_requirement": "female"
+    },
+    {
+      "name": "Confirmed Bachelor",
+      "editor_id": "ConfirmedBachelor",
+      "form_id": "001362",
+      "description": "+10% damage to male enemies, unique dialogue options with men.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+10% damage vs male enemies" }],
+      "is_playable": true,
+      "gender_requirement": "male"
+    },
+    {
+      "name": "Lady Killer",
+      "editor_id": "LadyKiller",
+      "form_id": "00094EB1",
+      "description": "+10% damage to female enemies, unique dialogue options with women.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+10% damage vs female enemies" }],
+      "is_playable": true,
+      "gender_requirement": "male"
+    },
+    {
+      "name": "Friend of the Night",
+      "editor_id": "FriendOfTheNight",
+      "form_id": "0014609E",
+      "description": "Enhanced low-light vision, making it easier to see in the dark.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [{ "attribute": "PE", "minimum": 6 }],
+        "skills": [{ "skill": "Sneak", "minimum": 30 }]
+      },
+      "effects": [{ "type": "other", "description": "Enhanced night vision" }],
+      "is_playable": true
+    },
+    {
+      "name": "Heave Ho!",
+      "editor_id": "HeaveHo",
+      "form_id": "0014609F",
+      "description": "+50% throwing velocity for thrown weapons.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [{ "attribute": "ST", "minimum": 5 }],
+        "skills": [{ "skill": "Explosives", "minimum": 30 }]
+      },
+      "effects": [{ "type": "combat", "description": "+50% throwing velocity" }],
+      "is_playable": true
+    },
+    {
+      "name": "Hunter",
+      "editor_id": "Hunter",
+      "form_id": "001460A0",
+      "description": "+75% critical damage against animals.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Survival", "minimum": 30 }]
+      },
+      "effects": [{ "type": "combat", "description": "+75% critical damage vs animals" }],
+      "is_playable": true
+    },
+    {
+      "name": "Intense Training",
+      "editor_id": "IntenseTraining",
+      "form_id": "00044CB1",
+      "description": "+1 to any SPECIAL attribute of your choice.",
+      "max_ranks": 10,
+      "level_requirement": 2,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "special_modifier", "description": "+1 to chosen SPECIAL attribute", "magnitude": 1 }],
+      "is_playable": true
+    },
+    {
+      "name": "Rapid Reload",
+      "editor_id": "RapidReload",
+      "form_id": "001460A1",
+      "description": "25% faster reload speed for all weapons.",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 5 }],
+        "skills": [{ "skill": "Guns", "minimum": 30 }]
+      },
+      "effects": [{ "type": "combat", "description": "25% faster reload speed" }],
+      "is_playable": true
+    },
+    {
+      "name": "Retention",
+      "editor_id": "Retention",
+      "form_id": "001460A2",
+      "description": "Skill magazines last 3x longer (3 minutes instead of 1).",
+      "max_ranks": 1,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 5 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "Skill magazine duration tripled" }],
+      "is_playable": true
+    },
+    {
+      "name": "Swift Learner",
+      "editor_id": "SwiftLearner",
+      "form_id": "00044CA9",
+      "description": "+10% bonus to all experience points earned per rank.",
+      "max_ranks": 3,
+      "level_requirement": 2,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 4 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "+10% XP earned per rank", "magnitude": 10 }],
+      "is_playable": true
+    },
+    {
+      "name": "Cannibal",
+      "editor_id": "Cannibal",
+      "form_id": "00094EBC",
+      "description": "Ability to eat human corpses to regain health.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "special_ability", "description": "Can eat human corpses for HP" }],
+      "is_playable": true
+    },
+    {
+      "name": "Comprehension",
+      "editor_id": "Comprehension",
+      "form_id": "00031DE2",
+      "description": "Skill books give +4 instead of +3; skill magazines give +20 instead of +10.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 4 }],
+        "skills": []
+      },
+      "effects": [
+        { "type": "other", "description": "Skill books grant +4 instead of +3" },
+        { "type": "other", "description": "Skill magazines grant +20 instead of +10" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Educated",
+      "editor_id": "Educated",
+      "form_id": "00031DE3",
+      "description": "+2 skill points per level.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 4 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "+2 skill points per level", "magnitude": 2 }],
+      "is_playable": true
+    },
+    {
+      "name": "Entomologist",
+      "editor_id": "Entomologist",
+      "form_id": "00031DB8",
+      "description": "+50% damage against all insects.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 4 }],
+        "skills": [{ "skill": "Survival", "minimum": 45 }]
+      },
+      "effects": [{ "type": "combat", "description": "+50% damage vs insects" }],
+      "is_playable": true
+    },
+    {
+      "name": "Rad Child",
+      "editor_id": "RadChild",
+      "form_id": "001460A3",
+      "description": "Regenerate health based on radiation level.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Survival", "minimum": 70 }]
+      },
+      "effects": [{ "type": "derived_stat", "description": "HP regeneration scaling with radiation level" }],
+      "is_playable": true
+    },
+    {
+      "name": "Run 'n Gun",
+      "editor_id": "RunNGun",
+      "form_id": "001460A4",
+      "description": "Halved accuracy penalty while moving with one-handed ranged weapons.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [],
+        "skills": [
+          { "skill": "Guns", "minimum": 45 },
+          { "skill": "Energy Weapons", "minimum": 45 }
+        ]
+      },
+      "effects": [{ "type": "combat", "description": "Halved spread penalty for one-handed guns while moving" }],
+      "is_playable": true,
+      "notes": "Prerequisites are OR: need Guns 45 OR Energy Weapons 45 (not both)"
+    },
+    {
+      "name": "Travel Light",
+      "editor_id": "TravelLight",
+      "form_id": "001460A5",
+      "description": "+10% movement speed while wearing light armor or no armor.",
+      "max_ranks": 1,
+      "level_requirement": 4,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Survival", "minimum": 45 }]
+      },
+      "effects": [{ "type": "derived_stat", "description": "+10% movement speed in light/no armor" }],
+      "is_playable": true
+    },
+    {
+      "name": "Bloody Mess",
+      "editor_id": "BloodyMess",
+      "form_id": "00094EBA",
+      "description": "+5% overall damage, enemies may explode violently on death.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+5% overall damage", "magnitude": 5 }],
+      "is_playable": true
+    },
+    {
+      "name": "Demolition Expert",
+      "editor_id": "DemolitionExpert",
+      "form_id": "00031DAB",
+      "description": "+20% damage with explosives per rank.",
+      "max_ranks": 3,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Explosives", "minimum": 50 }]
+      },
+      "effects": [{ "type": "combat", "description": "+20% explosive damage per rank", "magnitude": 20 }],
+      "is_playable": true
+    },
+    {
+      "name": "Ferocious Loyalty",
+      "editor_id": "FerociousLoyalty",
+      "form_id": "001460A6",
+      "description": "Companions gain +50 DR when player's health drops below 50%.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [{ "attribute": "CH", "minimum": 6 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "Companions gain +50 DR when player HP < 50%" }],
+      "is_playable": true
+    },
+    {
+      "name": "Fortune Finder",
+      "editor_id": "FortuneFinder",
+      "form_id": "00031DE5",
+      "description": "Find considerably more bottle caps in containers.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [{ "attribute": "LK", "minimum": 5 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "More caps found in containers" }],
+      "is_playable": true
+    },
+    {
+      "name": "Gunslinger",
+      "editor_id": "Gunslinger",
+      "form_id": "00094EBB",
+      "description": "+25% accuracy in VATS with one-handed weapons.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+25% VATS accuracy with one-handed weapons" }],
+      "is_playable": true
+    },
+    {
+      "name": "Hand Loader",
+      "editor_id": "HandLoader",
+      "form_id": "001460A7",
+      "description": "Unlocks special hand-loaded ammunition recipes at reloading benches.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Repair", "minimum": 70 }]
+      },
+      "effects": [{ "type": "other", "description": "Access to hand-loaded ammo recipes" }],
+      "is_playable": true
+    },
+    {
+      "name": "Lead Belly",
+      "editor_id": "LeadBelly",
+      "form_id": "00044CA7",
+      "description": "-50% radiation from food and water.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 5 }],
+        "skills": [{ "skill": "Survival", "minimum": 40 }]
+      },
+      "effects": [{ "type": "other", "description": "-50% radiation from food/water" }],
+      "is_playable": true,
+      "notes": "Prerequisites are OR: need EN 5 OR Survival 40 (not both)"
+    },
+    {
+      "name": "Shotgun Surgeon",
+      "editor_id": "ShotgunSurgeon",
+      "form_id": "001460A8",
+      "description": "Shotguns ignore 10 points of enemy DT.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Guns", "minimum": 45 }]
+      },
+      "effects": [{ "type": "combat", "description": "Shotguns ignore 10 DT" }],
+      "is_playable": true
+    },
+    {
+      "name": "The Professional",
+      "editor_id": "TheProfessional",
+      "form_id": "001460A9",
+      "description": "+20% sneak attack critical damage with revolvers, pistols, and SMGs.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Sneak", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "+20% sneak attack crit damage with pistols/revolvers/SMGs" }],
+      "is_playable": true
+    },
+    {
+      "name": "Toughness",
+      "editor_id": "Toughness",
+      "form_id": "00031DE0",
+      "description": "+3 DT permanently per rank.",
+      "max_ranks": 2,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 5 }],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "+3 DT per rank", "target": "DT", "magnitude": 3 }],
+      "is_playable": true
+    },
+    {
+      "name": "Vigilant Recycler",
+      "editor_id": "VigilantRecycler",
+      "form_id": "001460AA",
+      "description": "2x chance to recover drained energy cells/packs, plus efficient recycling recipes.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Science", "minimum": 70 }]
+      },
+      "effects": [{ "type": "other", "description": "2x ammo recovery chance and efficient energy ammo recycling" }],
+      "is_playable": true
+    },
+    {
+      "name": "Commando",
+      "editor_id": "Commando",
+      "form_id": "00094EBD",
+      "description": "+25% accuracy in VATS with two-handed weapons.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+25% VATS accuracy with two-handed weapons" }],
+      "is_playable": true
+    },
+    {
+      "name": "Cowboy",
+      "editor_id": "Cowboy",
+      "form_id": "001460AB",
+      "description": "+25% damage with lever-action firearms, revolvers, dynamite, knives, hatchets.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [],
+        "skills": [
+          { "skill": "Guns", "minimum": 45 },
+          { "skill": "Melee Weapons", "minimum": 45 }
+        ]
+      },
+      "effects": [{ "type": "combat", "description": "+25% damage with cowboy-themed weapons" }],
+      "is_playable": true
+    },
+    {
+      "name": "Living Anatomy",
+      "editor_id": "LivingAnatomy",
+      "form_id": "001460AC",
+      "description": "See enemy HP and DT; +5% damage against humans and non-feral ghouls.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Medicine", "minimum": 70 }]
+      },
+      "effects": [
+        { "type": "other", "description": "See enemy HP and DT" },
+        { "type": "combat", "description": "+5% damage vs humans and non-feral ghouls" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Pack Rat",
+      "editor_id": "PackRat",
+      "form_id": "001460AD",
+      "description": "Items weighing 2 lbs or less weigh half as much.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 5 }],
+        "skills": [{ "skill": "Barter", "minimum": 70 }]
+      },
+      "effects": [{ "type": "other", "description": "Items <= 2 lbs weigh 50% less" }],
+      "is_playable": true
+    },
+    {
+      "name": "Quick Draw",
+      "editor_id": "QuickDraw",
+      "form_id": "001460AE",
+      "description": "50% faster weapon equipping and holstering.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 5 }],
+        "skills": []
+      },
+      "effects": [{ "type": "combat", "description": "50% faster equip/holster speed" }],
+      "is_playable": true
+    },
+    {
+      "name": "Rad Resistance",
+      "editor_id": "RadResistance",
+      "form_id": "00031DA9",
+      "description": "+25% radiation resistance.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 5 }],
+        "skills": [{ "skill": "Survival", "minimum": 40 }]
+      },
+      "effects": [{ "type": "derived_stat", "description": "+25% radiation resistance", "magnitude": 25 }],
+      "is_playable": true
+    },
+    {
+      "name": "Scrounger",
+      "editor_id": "Scrounger",
+      "form_id": "00031DAA",
+      "description": "Find considerably more ammunition in containers.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [{ "attribute": "LK", "minimum": 5 }],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "More ammo found in containers" }],
+      "is_playable": true
+    },
+    {
+      "name": "Stonewall",
+      "editor_id": "Stonewall",
+      "form_id": "001460AF",
+      "description": "+5 DT against melee/unarmed attacks, cannot be knocked down.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [
+          { "attribute": "ST", "minimum": 6 },
+          { "attribute": "EN", "minimum": 6 }
+        ],
+        "skills": []
+      },
+      "effects": [
+        { "type": "derived_stat", "description": "+5 DT vs melee/unarmed", "magnitude": 5 },
+        { "type": "other", "description": "Cannot be knocked down in melee" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Strong Back",
+      "editor_id": "StrongBack",
+      "form_id": "00031DDE",
+      "description": "+50 lbs carry weight.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [
+          { "attribute": "ST", "minimum": 5 },
+          { "attribute": "EN", "minimum": 5 }
+        ],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "+50 carry weight", "target": "Carry Weight", "magnitude": 50 }],
+      "is_playable": true
+    },
+    {
+      "name": "Super Slam!",
+      "editor_id": "SuperSlam",
+      "form_id": "001460B0",
+      "description": "Melee and unarmed attacks have a chance to knock targets down.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [{ "attribute": "ST", "minimum": 6 }],
+        "skills": [{ "skill": "Melee Weapons", "minimum": 45 }]
+      },
+      "effects": [{ "type": "combat", "description": "Melee/unarmed attacks have knockdown chance" }],
+      "is_playable": true
+    },
+    {
+      "name": "Terrifying Presence",
+      "editor_id": "TerrifyingPresence",
+      "form_id": "001460B1",
+      "description": "Unique dialogue option that can terrify enemies, causing them to flee for 5 seconds.",
+      "max_ranks": 1,
+      "level_requirement": 8,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Speech", "minimum": 70 }]
+      },
+      "effects": [{ "type": "other", "description": "Dialogue option to make enemies flee for 5s" }],
+      "is_playable": true
+    },
+    {
+      "name": "Animal Friend",
+      "editor_id": "AnimalFriend",
+      "form_id": "00031DB2",
+      "description": "Rank 1: Animals won't attack. Rank 2: Animals come to your aid in combat.",
+      "max_ranks": 2,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [{ "attribute": "CH", "minimum": 6 }],
+        "skills": [{ "skill": "Survival", "minimum": 45 }]
+      },
+      "effects": [{ "type": "special_ability", "description": "Animals become allies" }],
+      "is_playable": true
+    },
+    {
+      "name": "Finesse",
+      "editor_id": "Finesse",
+      "form_id": "00094EC1",
+      "description": "+5% critical hit chance.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "derived_stat", "description": "+5% critical hit chance", "target": "Critical Chance", "magnitude": 5 }],
+      "is_playable": true
+    },
+    {
+      "name": "Here and Now",
+      "editor_id": "HereAndNow",
+      "form_id": "00031DB7",
+      "description": "Immediately gain one level.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "other", "description": "Gain one level immediately" }],
+      "is_playable": true
+    },
+    {
+      "name": "Math Wrath",
+      "editor_id": "MathWrath",
+      "form_id": "001460B2",
+      "description": "-10% AP cost for all VATS attacks.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Science", "minimum": 70 }]
+      },
+      "effects": [{ "type": "derived_stat", "description": "-10% VATS AP cost", "magnitude": -10 }],
+      "is_playable": true
+    },
+    {
+      "name": "Miss Fortune",
+      "editor_id": "MissFortune",
+      "form_id": "001460B3",
+      "description": "Miss Fortune occasionally appears in VATS to incapacitate enemies.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [{ "attribute": "LK", "minimum": 6 }],
+        "skills": []
+      },
+      "effects": [{ "type": "special_ability", "description": "Miss Fortune may appear in VATS" }],
+      "is_playable": true
+    },
+    {
+      "name": "Mister Sandman",
+      "editor_id": "MisterSandman",
+      "form_id": "00031DAD",
+      "description": "Silently kill sleeping NPCs and gain bonus XP.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Sneak", "minimum": 60 }]
+      },
+      "effects": [{ "type": "special_ability", "description": "Can silently kill sleeping NPCs for bonus XP" }],
+      "is_playable": true
+    },
+    {
+      "name": "Mysterious Stranger",
+      "editor_id": "MysteriousStranger",
+      "form_id": "00031DBC",
+      "description": "The Mysterious Stranger occasionally appears in VATS to finish off enemies.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [{ "attribute": "LK", "minimum": 6 }],
+        "skills": []
+      },
+      "effects": [{ "type": "special_ability", "description": "Mysterious Stranger may appear in VATS" }],
+      "is_playable": true
+    },
+    {
+      "name": "Nerd Rage!",
+      "editor_id": "NerdRage",
+      "form_id": "00031DBA",
+      "description": "+15 DT and Strength set to 10 when health drops below 20%.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 5 }],
+        "skills": [{ "skill": "Science", "minimum": 50 }]
+      },
+      "effects": [
+        { "type": "derived_stat", "description": "+15 DT when HP < 20%", "magnitude": 15 },
+        { "type": "special_modifier", "description": "STR set to 10 when HP < 20%" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Night Person",
+      "editor_id": "NightPerson",
+      "form_id": "00094EBF",
+      "description": "+2 Intelligence and +2 Perception between 6:00 PM and 6:00 AM.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [
+        { "type": "special_modifier", "description": "+2 IN at night", "target": "IN", "magnitude": 2 },
+        { "type": "special_modifier", "description": "+2 PE at night", "target": "PE", "magnitude": 2 }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Plasma Spaz",
+      "editor_id": "PlasmaSpaz",
+      "form_id": "001460B4",
+      "description": "-20% AP cost for plasma weapons in VATS.",
+      "max_ranks": 1,
+      "level_requirement": 10,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Energy Weapons", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "-20% AP cost for plasma weapons" }],
+      "is_playable": true
+    },
+    {
+      "name": "Fast Metabolism",
+      "editor_id": "FastMetabolism",
+      "form_id": "00094EBE",
+      "description": "+20% hit points restored by Stimpaks.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "other", "description": "+20% HP from Stimpaks" }],
+      "is_playable": true
+    },
+    {
+      "name": "Ghastly Scavenger",
+      "editor_id": "GhastlyScavenger",
+      "form_id": "001460B5",
+      "description": "Eat super mutant and feral ghoul corpses for health.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [],
+        "perks": ["Cannibal"]
+      },
+      "effects": [{ "type": "special_ability", "description": "Eat super mutant/ghoul corpses for HP" }],
+      "is_playable": true
+    },
+    {
+      "name": "Hit the Deck",
+      "editor_id": "HitTheDeck",
+      "form_id": "001460B6",
+      "description": "+25 DT against explosives.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Explosives", "minimum": 70 }]
+      },
+      "effects": [{ "type": "derived_stat", "description": "+25 DT vs explosives", "magnitude": 25 }],
+      "is_playable": true
+    },
+    {
+      "name": "Life Giver",
+      "editor_id": "LifeGiver",
+      "form_id": "00031DB1",
+      "description": "+30 hit points.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 6 }],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "+30 HP", "target": "HP", "magnitude": 30 }],
+      "is_playable": true
+    },
+    {
+      "name": "Long Haul",
+      "editor_id": "LongHaul",
+      "form_id": "001460B7",
+      "description": "Can fast travel while over-encumbered.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 6 }],
+        "skills": [{ "skill": "Barter", "minimum": 70 }]
+      },
+      "effects": [{ "type": "other", "description": "Fast travel while over-encumbered" }],
+      "is_playable": true
+    },
+    {
+      "name": "Piercing Strike",
+      "editor_id": "PiercingStrike",
+      "form_id": "001460B8",
+      "description": "Melee and unarmed attacks ignore 15 DT.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Unarmed", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "Melee/unarmed ignores 15 DT" }],
+      "is_playable": true
+    },
+    {
+      "name": "Pyromaniac",
+      "editor_id": "Pyromaniac",
+      "form_id": "00031DB5",
+      "description": "+50% damage with fire-based weapons.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Explosives", "minimum": 60 }]
+      },
+      "effects": [{ "type": "combat", "description": "+50% damage with fire weapons" }],
+      "is_playable": true
+    },
+    {
+      "name": "Robotics Expert",
+      "editor_id": "RoboticsExpert",
+      "form_id": "00031DC2",
+      "description": "+25% damage to robots, ability to shut down robots by sneaking up on them.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Science", "minimum": 50 }]
+      },
+      "effects": [
+        { "type": "combat", "description": "+25% damage vs robots" },
+        { "type": "special_ability", "description": "Shut down robots from behind" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Silent Running",
+      "editor_id": "SilentRunning",
+      "form_id": "00031DB3",
+      "description": "Running no longer factors into stealth detection; sneak speed increased.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 6 }],
+        "skills": [{ "skill": "Sneak", "minimum": 50 }]
+      },
+      "effects": [{ "type": "other", "description": "Running does not affect stealth" }],
+      "is_playable": true
+    },
+    {
+      "name": "Sniper",
+      "editor_id": "Sniper",
+      "form_id": "00031DB4",
+      "description": "+25% chance to hit the head in VATS.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [
+          { "attribute": "PE", "minimum": 6 },
+          { "attribute": "AG", "minimum": 6 }
+        ],
+        "skills": []
+      },
+      "effects": [{ "type": "combat", "description": "+25% VATS headshot accuracy" }],
+      "is_playable": true
+    },
+    {
+      "name": "Splash Damage",
+      "editor_id": "SplashDamage",
+      "form_id": "001460B9",
+      "description": "+25% area of effect for explosives.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Explosives", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "+25% explosive AoE radius" }],
+      "is_playable": true
+    },
+    {
+      "name": "Unstoppable Force",
+      "editor_id": "UnstoppableForce",
+      "form_id": "001460BA",
+      "description": "x4 damage through blocks with melee/unarmed attacks.",
+      "max_ranks": 1,
+      "level_requirement": 12,
+      "prerequisites": {
+        "special": [{ "attribute": "ST", "minimum": 7 }],
+        "skills": [{ "skill": "Melee Weapons", "minimum": 90 }]
+      },
+      "effects": [{ "type": "combat", "description": "x4 damage through enemy blocks" }],
+      "is_playable": true
+    },
+    {
+      "name": "Adamantium Skeleton",
+      "editor_id": "AdamantiumSkeleton",
+      "form_id": "00094EC4",
+      "description": "Limbs take 50% less damage.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "derived_stat", "description": "50% reduced limb damage" }],
+      "is_playable": true
+    },
+    {
+      "name": "Center of Mass",
+      "editor_id": "CenterOfMass",
+      "form_id": "001460BB",
+      "description": "+15% damage to torso in VATS with firearms.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Guns", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "+15% VATS torso damage" }],
+      "is_playable": true
+    },
+    {
+      "name": "Chemist",
+      "editor_id": "Chemist",
+      "form_id": "00031DAF",
+      "description": "Chem durations doubled.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Medicine", "minimum": 60 }]
+      },
+      "effects": [{ "type": "other", "description": "Chem duration x2" }],
+      "is_playable": true
+    },
+    {
+      "name": "Jury Rigging",
+      "editor_id": "JuryRigging",
+      "form_id": "001460BC",
+      "description": "Repair any item using a similar item of the same type.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Repair", "minimum": 90 }]
+      },
+      "effects": [{ "type": "other", "description": "Repair with similar item types" }],
+      "is_playable": true
+    },
+    {
+      "name": "Light Step",
+      "editor_id": "LightStep",
+      "form_id": "00031DB6",
+      "description": "Never set off floor-based traps or mines.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": {
+        "special": [
+          { "attribute": "PE", "minimum": 6 },
+          { "attribute": "AG", "minimum": 6 }
+        ],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "Immune to floor traps and mines" }],
+      "is_playable": true
+    },
+    {
+      "name": "Purifier",
+      "editor_id": "Purifier",
+      "form_id": "001460BD",
+      "description": "+50% damage with melee and unarmed against Abominations.",
+      "max_ranks": 1,
+      "level_requirement": 14,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "combat", "description": "+50% melee/unarmed damage vs Abominations" }],
+      "is_playable": true
+    },
+    {
+      "name": "Action Boy/Action Girl",
+      "editor_id": "ActionBoy",
+      "form_id": "00031DDB",
+      "description": "+15 Action Points per rank.",
+      "max_ranks": 2,
+      "level_requirement": 16,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 6 }],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "+15 AP per rank", "target": "AP", "magnitude": 15 }],
+      "is_playable": true
+    },
+    {
+      "name": "Better Criticals",
+      "editor_id": "BetterCriticals",
+      "form_id": "00031DDB",
+      "description": "+50% critical hit damage.",
+      "max_ranks": 1,
+      "level_requirement": 16,
+      "prerequisites": {
+        "special": [
+          { "attribute": "PE", "minimum": 6 },
+          { "attribute": "LK", "minimum": 6 }
+        ],
+        "skills": []
+      },
+      "effects": [{ "type": "combat", "description": "+50% critical hit damage" }],
+      "is_playable": true
+    },
+    {
+      "name": "Chem Resistant",
+      "editor_id": "ChemResistant",
+      "form_id": "00031DAE",
+      "description": "50% less likely to become addicted to chems.",
+      "max_ranks": 1,
+      "level_requirement": 16,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Medicine", "minimum": 60 }]
+      },
+      "effects": [{ "type": "other", "description": "50% reduced addiction chance" }],
+      "is_playable": true
+    },
+    {
+      "name": "Meltdown",
+      "editor_id": "Meltdown",
+      "form_id": "001460BE",
+      "description": "Enemies killed by energy weapons emit a damaging energy field on death.",
+      "max_ranks": 1,
+      "level_requirement": 16,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Energy Weapons", "minimum": 90 }]
+      },
+      "effects": [{ "type": "combat", "description": "Energy weapon kills cause AoE damage" }],
+      "is_playable": true
+    },
+    {
+      "name": "Tag!",
+      "editor_id": "Tag",
+      "form_id": "00031DBD",
+      "description": "Select a fourth tag skill, gaining +15 points in that skill.",
+      "max_ranks": 1,
+      "level_requirement": 16,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "skill_modifier", "description": "+15 to a fourth tag skill", "magnitude": 15 }],
+      "is_playable": true
+    },
+    {
+      "name": "Weapon Handling",
+      "editor_id": "WeaponHandling",
+      "form_id": "001460BF",
+      "description": "Weapon Strength requirements are reduced by 2.",
+      "max_ranks": 1,
+      "level_requirement": 16,
+      "prerequisites": {
+        "special": [],
+        "skills": []
+      },
+      "effects": [{ "type": "other", "description": "Weapon STR requirements -2" }],
+      "is_playable": true,
+      "notes": "Cannot be taken if Strength is already 10"
+    },
+    {
+      "name": "Computer Whiz",
+      "editor_id": "ComputerWhiz",
+      "form_id": "00031DC4",
+      "description": "Can retry a hacking attempt on a locked-out terminal.",
+      "max_ranks": 1,
+      "level_requirement": 18,
+      "prerequisites": {
+        "special": [{ "attribute": "IN", "minimum": 7 }],
+        "skills": [{ "skill": "Science", "minimum": 70 }]
+      },
+      "effects": [{ "type": "special_ability", "description": "Retry locked-out terminals" }],
+      "is_playable": true
+    },
+    {
+      "name": "Concentrated Fire",
+      "editor_id": "ConcentratedFire",
+      "form_id": "00044CAF",
+      "description": "+5% accuracy bonus per subsequent VATS attack on the same body part.",
+      "max_ranks": 1,
+      "level_requirement": 18,
+      "prerequisites": {
+        "special": [],
+        "skills": [
+          { "skill": "Energy Weapons", "minimum": 60 },
+          { "skill": "Guns", "minimum": 60 }
+        ]
+      },
+      "effects": [{ "type": "combat", "description": "+5% accuracy per consecutive VATS hit on same part" }],
+      "is_playable": true
+    },
+    {
+      "name": "Infiltrator",
+      "editor_id": "Infiltrator",
+      "form_id": "00031DC3",
+      "description": "Can retry a lockpicking attempt on a broken lock.",
+      "max_ranks": 1,
+      "level_requirement": 18,
+      "prerequisites": {
+        "special": [{ "attribute": "PE", "minimum": 7 }],
+        "skills": [{ "skill": "Lockpick", "minimum": 70 }]
+      },
+      "effects": [{ "type": "special_ability", "description": "Retry broken locks" }],
+      "is_playable": true
+    },
+    {
+      "name": "Paralyzing Palm",
+      "editor_id": "ParalyzingPalm",
+      "form_id": "00044CAB",
+      "description": "30% chance to paralyze enemy for 30 seconds with unarmed VATS attack.",
+      "max_ranks": 1,
+      "level_requirement": 18,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Unarmed", "minimum": 70 }]
+      },
+      "effects": [{ "type": "combat", "description": "30% paralyze chance in unarmed VATS" }],
+      "is_playable": true
+    },
+    {
+      "name": "Explorer",
+      "editor_id": "Explorer",
+      "form_id": "00031DE4",
+      "description": "All locations are revealed on the map.",
+      "max_ranks": 1,
+      "level_requirement": 20,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "other", "description": "All map locations revealed" }],
+      "is_playable": true
+    },
+    {
+      "name": "Grim Reaper's Sprint",
+      "editor_id": "GrimReapersSprint",
+      "form_id": "00031DB9",
+      "description": "Killing an enemy in VATS restores 20 AP.",
+      "max_ranks": 1,
+      "level_requirement": 20,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "derived_stat", "description": "VATS kill restores 20 AP", "magnitude": 20 }],
+      "is_playable": true
+    },
+    {
+      "name": "Ninja",
+      "editor_id": "Ninja",
+      "form_id": "00031DCC",
+      "description": "+15% critical chance with melee/unarmed; +25% damage with sneak attack criticals.",
+      "max_ranks": 1,
+      "level_requirement": 20,
+      "prerequisites": {
+        "special": [],
+        "skills": [
+          { "skill": "Melee Weapons", "minimum": 80 },
+          { "skill": "Sneak", "minimum": 80 }
+        ]
+      },
+      "effects": [
+        { "type": "combat", "description": "+15% melee/unarmed critical chance" },
+        { "type": "combat", "description": "+25% sneak attack critical damage" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Solar Powered",
+      "editor_id": "SolarPowered",
+      "form_id": "00031DC1",
+      "description": "+2 Strength and +1 HP/sec regeneration while outdoors during daytime (6 AM-6 PM).",
+      "max_ranks": 1,
+      "level_requirement": 20,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 7 }],
+        "skills": []
+      },
+      "effects": [
+        { "type": "special_modifier", "description": "+2 STR outdoors daytime", "target": "ST", "magnitude": 2 },
+        { "type": "derived_stat", "description": "+1 HP/sec outdoors daytime" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Laser Commander",
+      "editor_id": "LaserCommander",
+      "form_id": "001460C0",
+      "description": "+15% damage and +10% critical chance with laser weapons.",
+      "max_ranks": 1,
+      "level_requirement": 22,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Energy Weapons", "minimum": 90 }]
+      },
+      "effects": [
+        { "type": "combat", "description": "+15% laser weapon damage" },
+        { "type": "combat", "description": "+10% laser weapon critical chance" }
+      ],
+      "is_playable": true
+    },
+    {
+      "name": "Nuka Chemist",
+      "editor_id": "NukaChemist",
+      "form_id": "001460C1",
+      "description": "Unlocks special Nuka-Cola recipes at workbenches.",
+      "max_ranks": 1,
+      "level_requirement": 22,
+      "prerequisites": {
+        "special": [],
+        "skills": [{ "skill": "Science", "minimum": 90 }]
+      },
+      "effects": [{ "type": "other", "description": "Access to special Nuka-Cola recipes" }],
+      "is_playable": true
+    },
+    {
+      "name": "Spray and Pray",
+      "editor_id": "SprayAndPray",
+      "form_id": "001460C2",
+      "description": "Your attacks deal 75% less damage to companions.",
+      "max_ranks": 1,
+      "level_requirement": 22,
+      "prerequisites": { "special": [], "skills": [] },
+      "effects": [{ "type": "other", "description": "-75% friendly fire damage to companions" }],
+      "is_playable": true
+    },
+    {
+      "name": "Slayer",
+      "editor_id": "Slayer",
+      "form_id": "00031DB0",
+      "description": "+30% attack speed with melee and unarmed weapons.",
+      "max_ranks": 1,
+      "level_requirement": 24,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 7 }],
+        "skills": [{ "skill": "Unarmed", "minimum": 90 }]
+      },
+      "effects": [{ "type": "combat", "description": "+30% melee/unarmed attack speed" }],
+      "is_playable": true
+    },
+    {
+      "name": "Nerves of Steel",
+      "editor_id": "NervesOfSteel",
+      "form_id": "0009982D",
+      "description": "AP regeneration rate significantly increased (+20%).",
+      "max_ranks": 1,
+      "level_requirement": 26,
+      "prerequisites": {
+        "special": [{ "attribute": "AG", "minimum": 7 }],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "+20% AP regeneration rate" }],
+      "is_playable": true
+    },
+    {
+      "name": "Rad Absorption",
+      "editor_id": "RadAbsorption",
+      "form_id": "00031DA7",
+      "description": "Radiation level slowly decreases over time (-1 rad/20 sec).",
+      "max_ranks": 1,
+      "level_requirement": 28,
+      "prerequisites": {
+        "special": [{ "attribute": "EN", "minimum": 7 }],
+        "skills": []
+      },
+      "effects": [{ "type": "derived_stat", "description": "-1 rad per 20 seconds" }],
+      "is_playable": true
+    },
+    {
+      "name": "Mad Bomber",
+      "editor_id": "MadBomber",
+      "form_id": "001460C3",
+      "description": "Craft special explosives at workbenches from common items.",
+      "max_ranks": 1,
+      "level_requirement": 6,
+      "prerequisites": {
+        "special": [],
+        "skills": [
+          { "skill": "Repair", "minimum": 45 },
+          { "skill": "Explosives", "minimum": 45 }
+        ]
+      },
+      "effects": [{ "type": "other", "description": "Unlock special explosive crafting recipes" }],
+      "is_playable": true
+    }
+  ],
+  "traits": [
+    {
+      "name": "Built to Destroy",
+      "editor_id": "BuiltToDestroy",
+      "form_id": "0014609A",
+      "description": "+3% critical chance, but weapons degrade 15% faster.",
+      "effects": [
+        { "type": "combat", "description": "+3% critical hit chance", "target": "Critical Chance", "magnitude": 3 },
+        { "type": "combat", "description": "+15% weapon condition degradation rate", "target": "Weapon Degradation", "magnitude": 15 }
+      ]
+    },
+    {
+      "name": "Fast Shot",
+      "editor_id": "FastShot",
+      "form_id": "0014609B",
+      "description": "Weapons fire 20% faster and cost 20% less AP in VATS, but have 20% less accuracy.",
+      "effects": [
+        { "type": "combat", "description": "+20% fire rate", "target": "Fire Rate", "magnitude": 20 },
+        { "type": "combat", "description": "-20% AP cost in VATS", "target": "VATS AP Cost", "magnitude": -20 },
+        { "type": "combat", "description": "+20% weapon spread (less accurate)", "target": "Spread", "magnitude": 20 }
+      ]
+    },
+    {
+      "name": "Four Eyes",
+      "editor_id": "FourEyes",
+      "form_id": "0014609C",
+      "description": "+2 Perception while wearing glasses, -1 base Perception permanently.",
+      "effects": [
+        { "type": "special_modifier", "description": "-1 base Perception (permanent)", "target": "PE", "magnitude": -1 },
+        { "type": "special_modifier", "description": "+2 Perception while wearing glasses", "target": "PE", "magnitude": 2 }
+      ]
+    },
+    {
+      "name": "Good Natured",
+      "editor_id": "GoodNatured",
+      "form_id": "0014609D",
+      "description": "+5 to Barter, Medicine, Repair, Science, Speech. -5 to Energy Weapons, Explosives, Guns, Melee Weapons, Unarmed.",
+      "effects": [
+        { "type": "skill_modifier", "description": "+5 Barter", "target": "Barter", "magnitude": 5 },
+        { "type": "skill_modifier", "description": "+5 Medicine", "target": "Medicine", "magnitude": 5 },
+        { "type": "skill_modifier", "description": "+5 Repair", "target": "Repair", "magnitude": 5 },
+        { "type": "skill_modifier", "description": "+5 Science", "target": "Science", "magnitude": 5 },
+        { "type": "skill_modifier", "description": "+5 Speech", "target": "Speech", "magnitude": 5 },
+        { "type": "skill_modifier", "description": "-5 Energy Weapons", "target": "Energy Weapons", "magnitude": -5 },
+        { "type": "skill_modifier", "description": "-5 Explosives", "target": "Explosives", "magnitude": -5 },
+        { "type": "skill_modifier", "description": "-5 Guns", "target": "Guns", "magnitude": -5 },
+        { "type": "skill_modifier", "description": "-5 Melee Weapons", "target": "Melee Weapons", "magnitude": -5 },
+        { "type": "skill_modifier", "description": "-5 Unarmed", "target": "Unarmed", "magnitude": -5 }
+      ]
+    },
+    {
+      "name": "Heavy Handed",
+      "editor_id": "HeavyHanded",
+      "form_id": "00146099",
+      "description": "+20% melee/unarmed damage, but -60% critical hit damage with melee/unarmed.",
+      "effects": [
+        { "type": "combat", "description": "+20% melee and unarmed damage", "target": "Melee Damage", "magnitude": 20 },
+        { "type": "combat", "description": "-60% melee and unarmed critical hit damage", "target": "Melee Critical Damage", "magnitude": -60 }
+      ]
+    },
+    {
+      "name": "Kamikaze",
+      "editor_id": "Kamikaze",
+      "form_id": "00146098",
+      "description": "+10 Action Points, but -2 DT.",
+      "effects": [
+        { "type": "derived_stat", "description": "+10 Action Points", "target": "AP", "magnitude": 10 },
+        { "type": "derived_stat", "description": "-2 Damage Threshold", "target": "DT", "magnitude": -2 }
+      ]
+    },
+    {
+      "name": "Loose Cannon",
+      "editor_id": "LooseCannon",
+      "form_id": "00146097",
+      "description": "+30% thrown weapons speed and -30% thrown AP cost, but -25% thrown weapon range.",
+      "effects": [
+        { "type": "combat", "description": "+30% thrown weapon attack speed", "target": "Thrown Speed", "magnitude": 30 },
+        { "type": "combat", "description": "-30% AP cost for thrown weapons", "target": "Thrown AP Cost", "magnitude": -30 },
+        { "type": "combat", "description": "-25% thrown weapon velocity (shorter range)", "target": "Thrown Range", "magnitude": -25 }
+      ]
+    },
+    {
+      "name": "Small Frame",
+      "editor_id": "SmallFrame",
+      "form_id": "00146096",
+      "description": "+1 Agility, but limbs take 25% more damage.",
+      "effects": [
+        { "type": "special_modifier", "description": "+1 Agility", "target": "AG", "magnitude": 1 },
+        { "type": "combat", "description": "+25% limb damage received", "target": "Limb Damage", "magnitude": 25 }
+      ]
+    },
+    {
+      "name": "Trigger Discipline",
+      "editor_id": "TriggerDiscipline",
+      "form_id": "00146095",
+      "description": "+20% accuracy, but -20% fire rate and +20% AP cost in VATS.",
+      "effects": [
+        { "type": "combat", "description": "+20% accuracy (reduced spread)", "target": "Spread", "magnitude": -20 },
+        { "type": "combat", "description": "-20% fire rate", "target": "Fire Rate", "magnitude": -20 },
+        { "type": "combat", "description": "+20% AP cost in VATS", "target": "VATS AP Cost", "magnitude": 20 }
+      ]
+    },
+    {
+      "name": "Wild Wasteland",
+      "editor_id": "WildWasteland",
+      "form_id": "00146094",
+      "description": "Adds wacky and unusual random encounters, items, and Easter eggs throughout the wasteland.",
+      "effects": [
+        { "type": "other", "description": "Adds unique encounters and replaces some items with alternatives" }
+      ]
+    }
+  ],
+  "implants": [
+    {
+      "name": "Strength Implant",
+      "form_id": "00140C4E",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "ST", "magnitude": 1 }]
+    },
+    {
+      "name": "Perception Implant",
+      "form_id": "00140C4F",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "PE", "magnitude": 1 }]
+    },
+    {
+      "name": "Endurance Implant",
+      "form_id": "00140C50",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "EN", "magnitude": 1 }]
+    },
+    {
+      "name": "Charisma Implant",
+      "form_id": "00140C51",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "CH", "magnitude": 1 }]
+    },
+    {
+      "name": "Intelligence Implant",
+      "form_id": "00140C52",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "IN", "magnitude": 1 }]
+    },
+    {
+      "name": "Agility Implant",
+      "form_id": "00140C53",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "AG", "magnitude": 1 }]
+    },
+    {
+      "name": "Luck Implant",
+      "form_id": "00140C54",
+      "cost": 4000,
+      "effects": [{ "type": "special_modifier", "target": "LK", "magnitude": 1 }]
+    },
+    {
+      "name": "Sub-Dermal Armor",
+      "form_id": "00140C55",
+      "cost": 8000,
+      "effects": [{ "type": "derived_stat", "target": "DT", "magnitude": 4 }]
+    },
+    {
+      "name": "Monocyte Breeder",
+      "form_id": "00140C56",
+      "cost": 12000,
+      "effects": [{ "type": "derived_stat", "target": "HP Regeneration", "magnitude": 1 }]
+    }
+  ],
+  "skill_books": [
+    { "name": "Tales of a Junktown Jerky Vendor", "form_id": "0005E0D8", "skill": "Barter", "point_value": 3 },
+    { "name": "Nikola Tesla and You", "form_id": "0005E0D9", "skill": "Energy Weapons", "point_value": 3 },
+    { "name": "Duck and Cover!", "form_id": "0005E0DA", "skill": "Explosives", "point_value": 3 },
+    { "name": "Guns and Bullets", "form_id": "0005E0DB", "skill": "Guns", "point_value": 3 },
+    { "name": "Tumblers Today", "form_id": "0005E0DC", "skill": "Lockpick", "point_value": 3 },
+    { "name": "D.C. Journal of Internal Medicine", "form_id": "0005E0DD", "skill": "Medicine", "point_value": 3 },
+    { "name": "Grognak the Barbarian", "form_id": "0005E0DE", "skill": "Melee Weapons", "point_value": 3 },
+    { "name": "Dean's Electronics", "form_id": "0005E0DF", "skill": "Repair", "point_value": 3 },
+    { "name": "Big Book of Science", "form_id": "0005E0E0", "skill": "Science", "point_value": 3 },
+    { "name": "Chinese Army: Special Ops Training Manual", "form_id": "0005E0E1", "skill": "Sneak", "point_value": 3 },
+    { "name": "Lying, Congressional Style", "form_id": "0005E0E2", "skill": "Speech", "point_value": 3 },
+    { "name": "Wasteland Survival Guide", "form_id": "0005E0E3", "skill": "Survival", "point_value": 3 },
+    { "name": "Pugilism Illustrated", "form_id": "0005E0E4", "skill": "Unarmed", "point_value": 3 }
+  ],
+  "skill_magazines": [
+    { "name": "Salesman Weekly", "form_id": "00140C3A", "skill": "Barter", "point_value": 10, "duration": "60s" },
+    { "name": "Future Weapons Today", "form_id": "00140C3B", "skill": "Energy Weapons", "point_value": 10, "duration": "60s" },
+    { "name": "Patriot's Cookbook", "form_id": "00140C3C", "skill": "Explosives", "point_value": 10, "duration": "60s" },
+    { "name": "Milsurp Review", "form_id": "00140C3D", "skill": "Guns", "point_value": 10, "duration": "60s" },
+    { "name": "Locksmith's Reader", "form_id": "00140C3E", "skill": "Lockpick", "point_value": 10, "duration": "60s" },
+    { "name": "Today's Physician", "form_id": "00140C3F", "skill": "Medicine", "point_value": 10, "duration": "60s" },
+    { "name": "Tæles of Chivalrie", "form_id": "00140C40", "skill": "Melee Weapons", "point_value": 10, "duration": "60s" },
+    { "name": "Fixin' Things", "form_id": "00140C41", "skill": "Repair", "point_value": 10, "duration": "60s" },
+    { "name": "Programmer's Digest", "form_id": "00140C42", "skill": "Science", "point_value": 10, "duration": "60s" },
+    { "name": "¡La Fantoma!", "form_id": "00140C43", "skill": "Sneak", "point_value": 10, "duration": "60s" },
+    { "name": "Meeting People", "form_id": "00140C44", "skill": "Speech", "point_value": 10, "duration": "60s" },
+    { "name": "Lad's Life", "form_id": "00140C45", "skill": "Survival", "point_value": 10, "duration": "60s" },
+    { "name": "Boxing Times", "form_id": "00140C46", "skill": "Unarmed", "point_value": 10, "duration": "60s" },
+    { "name": "True Police Stories", "form_id": "00140C47", "skill": "Critical Chance", "point_value": 5, "duration": "60s" }
+  ],
+  "leveling": {
+    "max_level": 30,
+    "perk_interval": 2,
+    "skill_points_per_level": {
+      "base": 10,
+      "intelligence_multiplier": 0.5
+    },
+    "tag_bonus": 15,
+    "skill_cap": 100,
+    "special_points_at_creation": 40
+  }
+}

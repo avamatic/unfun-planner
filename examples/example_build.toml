@@ -1,0 +1,46 @@
+# Example FNV Build: High Intelligence Gunslinger
+# SPECIAL total must equal 40
+
+[character]
+strength = 5
+perception = 5
+endurance = 9
+charisma = 1
+intelligence = 9
+agility = 6
+luck = 5
+tagged_skills = ["Guns", "Repair", "Speech"]
+traits = ["Good Natured"]
+
+[levels.2]
+skills = { Guns = 5, Speech = 5, Repair = 4 }
+perk = "ConfirmedBachelor"
+
+[levels.3]
+skills = { Guns = 5, Lockpick = 5, Science = 4 }
+
+[levels.4]
+skills = { Guns = 4, Speech = 5, Medicine = 5 }
+perk = "Educated"
+
+[levels.5]
+skills = { Guns = 4, Science = 6, Repair = 6 }
+
+[levels.6]
+skills = { Guns = 4, Lockpick = 6, Speech = 6 }
+perk = "Toughness"
+
+[levels.7]
+skills = { Guns = 4, Repair = 6, Sneak = 6 }
+
+[levels.8]
+skills = { Guns = 4, Medicine = 6, Science = 6 }
+perk = "StrongBack"
+
+[implants]
+install_at_level = {}
+
+[[skill_books]]
+skill = "Guns"
+at_level = 5
+count = 2

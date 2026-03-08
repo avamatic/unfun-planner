@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "build_data.schema.json",
+  "title": "FNV Build Data",
+  "description": "Extracted Fallout: New Vegas character build data from xNVSE plugin",
+  "type": "object",
+  "required": ["metadata", "special_attributes", "skills", "perks", "traits", "implants", "skill_books", "skill_magazines", "leveling"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["game_version", "extractor_version", "load_order"],
+      "properties": {
+        "game_version": { "type": "string", "description": "Game executable version" },
+        "extractor_version": { "type": "string", "description": "Extractor plugin version" },
+        "load_order": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of loaded ESM/ESP files in order"
+        },
+        "extraction_date": { "type": "string", "format": "date-time" }
+      }
+    },
+    "special_attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "abbreviation", "default_value", "min_value", "max_value"],
+        "properties": {
+          "name": { "type": "string" },
+          "abbreviation": { "type": "string", "maxLength": 3 },
+          "default_value": { "type": "integer" },
+          "min_value": { "type": "integer" },
+          "max_value": { "type": "integer" }
+        }
+      },
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "editor_id", "form_id", "governing_special"],
+        "properties": {
+          "name": { "type": "string" },
+          "editor_id": { "type": "string" },
+          "form_id": { "type": "string", "pattern": "^[0-9A-Fa-f]+$" },
+          "governing_special": { "type": "string", "description": "Abbreviation of the governing SPECIAL attribute" },
+          "base_value_formula": { "type": "string", "description": "Formula string, e.g. '2 + (luck / 2) + (agility * 2)'" }
+        }
+      }
+    },
+    "perks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "editor_id", "form_id", "description", "max_ranks"],
+        "properties": {
+          "name": { "type": "string" },
+          "editor_id": { "type": "string" },
+          "form_id": { "type": "string" },
+          "description": { "type": "string" },
+          "max_ranks": { "type": "integer", "minimum": 1 },
+          "level_requirement": { "type": "integer", "minimum": 0 },
+          "prerequisites": {
+            "type": "object",
+            "properties": {
+              "special": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["attribute", "minimum"],
+                  "properties": {
+                    "attribute": { "type": "string" },
+                    "minimum": { "type": "integer" }
+                  }
+                }
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["skill", "minimum"],
+                  "properties": {
+                    "skill": { "type": "string" },
+                    "minimum": { "type": "integer" }
+                  }
+                }
+              },
+              "perks": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Editor IDs of required perks"
+              }
+            }
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "description"],
+              "properties": {
+                "type": { "type": "string", "enum": ["skill_modifier", "special_modifier", "derived_stat", "special_ability", "other"] },
+                "description": { "type": "string" },
+                "target": { "type": "string" },
+                "magnitude": { "type": "number" }
+              }
+            }
+          },
+          "is_playable": { "type": "boolean", "description": "Whether this perk can be selected by the player at level-up" }
+        }
+      }
+    },
+    "traits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "editor_id", "form_id", "description", "effects"],
+        "properties": {
+          "name": { "type": "string" },
+          "editor_id": { "type": "string" },
+          "form_id": { "type": "string" },
+          "description": { "type": "string" },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "description"],
+              "properties": {
+                "type": { "type": "string", "enum": ["skill_modifier", "special_modifier", "derived_stat", "combat", "experience", "other"] },
+                "description": { "type": "string" },
+                "target": { "type": "string" },
+                "magnitude": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "implants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "form_id", "effects"],
+        "properties": {
+          "name": { "type": "string" },
+          "form_id": { "type": "string" },
+          "cost": { "type": "integer", "description": "Caps cost" },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "target", "magnitude"],
+              "properties": {
+                "type": { "type": "string", "enum": ["special_modifier", "derived_stat", "other"] },
+                "target": { "type": "string" },
+                "magnitude": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "skill_books": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "form_id", "skill", "point_value"],
+        "properties": {
+          "name": { "type": "string" },
+          "form_id": { "type": "string" },
+          "skill": { "type": "string" },
+          "point_value": { "type": "integer" }
+        }
+      }
+    },
+    "skill_magazines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "form_id", "skill", "point_value"],
+        "properties": {
+          "name": { "type": "string" },
+          "form_id": { "type": "string" },
+          "skill": { "type": "string" },
+          "point_value": { "type": "integer" },
+          "duration": { "type": "string", "description": "Duration of temporary effect, e.g. '60s'" }
+        }
+      }
+    },
+    "leveling": {
+      "type": "object",
+      "required": ["max_level", "perk_interval", "skill_points_per_level", "tag_bonus", "skill_cap", "special_points_at_creation"],
+      "properties": {
+        "max_level": { "type": "integer" },
+        "perk_interval": { "type": "integer", "description": "Gain a perk every N levels" },
+        "skill_points_per_level": {
+          "type": "object",
+          "required": ["base", "intelligence_multiplier"],
+          "properties": {
+            "base": { "type": "integer", "description": "Base skill points per level (before INT bonus)" },
+            "intelligence_multiplier": { "type": "number", "description": "Multiplied by INT and added to base (e.g., 0.5 means INT/2)" }
+          },
+          "description": "Formula: base + floor(intelligence * intelligence_multiplier)"
+        },
+        "tag_bonus": { "type": "integer", "description": "Bonus skill points for tagged skills" },
+        "skill_cap": { "type": "integer", "description": "Maximum value for any skill" },
+        "special_points_at_creation": { "type": "integer", "description": "Total SPECIAL points available at character creation" }
+      }
+    }
+  }
+}

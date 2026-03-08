@@ -1,0 +1,16 @@
+# Rust
+planner/target/
+
+# C++ build
+build/
+extractor/xNVSE/
+xNVSE/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
