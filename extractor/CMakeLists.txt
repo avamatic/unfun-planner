@@ -86,8 +86,8 @@ target_compile_definitions(BuildDataExtractor PRIVATE RUNTIME)
 
 if(MSVC)
     target_compile_options(BuildDataExtractor PRIVATE /W3 /MP)
-    # Force-include base types header so UInt8/UInt32/etc. are available everywhere
-    target_compile_options(BuildDataExtractor PRIVATE /FI"common/ITypes.h")
+    # Force-include prefix header (base types + std library headers xNVSE expects)
+    target_compile_options(BuildDataExtractor PRIVATE /FI"${CMAKE_CURRENT_SOURCE_DIR}/prefix.h")
 endif()
 
 set_target_properties(BuildDataExtractor PROPERTIES
