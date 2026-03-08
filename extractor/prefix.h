@@ -24,8 +24,14 @@
 #include <functional>
 #include <memory>
 
+// xNVSE uses 'byte' as a type alias in some structs (e.g. Timer in GameAPI.h)
+typedef unsigned char byte;
+
 // xNVSE base integer types
 #include "common/ITypes.h"
+
+// xNVSE logging (used by GameAPI.cpp, GameBSExtraData.cpp, etc.)
+#include "common/IDebugLog.h"
 
 // xNVSE containers (UnorderedMap used in CommandTable.h)
 #include "nvse/nvse/containers.h"

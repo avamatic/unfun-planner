@@ -26,6 +26,13 @@ message(STATUS "Using xNVSE source from: ${NVSE_ROOT}")
 set(NVSE_DIR "${NVSE_ROOT}/nvse/nvse")
 set(NVSE_COMMON_DIR "${NVSE_ROOT}/common")
 
+# --- xNVSE common library sources ---
+set(NVSE_COMMON_SOURCES
+    ${NVSE_COMMON_DIR}/IDebugLog.cpp
+    ${NVSE_COMMON_DIR}/IFileStream.cpp
+    ${NVSE_COMMON_DIR}/IErrors.cpp
+)
+
 # --- xNVSE source files compiled into the plugin ---
 # Must match what nvse_plugin_example.vcxproj compiles
 set(NVSE_SOURCES
@@ -68,9 +75,20 @@ set(PLUGIN_SOURCES
     json_writer.cpp
 )
 
+# Filter common sources too
+set(NVSE_COMMON_FILTERED)
+foreach(src ${NVSE_COMMON_SOURCES})
+    if(EXISTS "${src}")
+        list(APPEND NVSE_COMMON_FILTERED "${src}")
+    else()
+        message(WARNING "xNVSE common source not found, skipping: ${src}")
+    endif()
+endforeach()
+
 add_library(BuildDataExtractor SHARED
     ${PLUGIN_SOURCES}
     ${NVSE_SOURCES_FILTERED}
+    ${NVSE_COMMON_FILTERED}
     exports.def
 )
 
@@ -80,6 +98,7 @@ target_include_directories(BuildDataExtractor PRIVATE
     ${NVSE_ROOT}/nvse
     ${NVSE_DIR}
     ${NVSE_COMMON_DIR}
+    ${NVSE_ROOT}/common
 )
 
 target_compile_definitions(BuildDataExtractor PRIVATE RUNTIME)

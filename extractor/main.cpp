@@ -21,10 +21,13 @@
 #endif
 
 static PluginHandle g_pluginHandle = kPluginHandle_Invalid;
-static const NVSEInterface* g_nvseInterface = nullptr;
+static NVSEInterface* g_nvseInterface = nullptr;
 static NVSEMessagingInterface* g_messagingInterface = nullptr;
 
 #define PLUGIN_VERSION 1
+
+// REG_CMD is a convenience macro from the xNVSE plugin example, not part of the API
+#define REG_CMD(name) nvse->RegisterCommand(&kCommandInfo_##name)
 
 // Optional: path parameter for output file
 static ParamInfo kParams_OneOptionalString[] = {
