@@ -4,13 +4,23 @@
 
 #pragma once
 
+// Windows API (xNVSE uses CRITICAL_SECTION, InterlockedIncrement, etc.)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
 // Standard library headers used by xNVSE
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <tuple>
 #include <algorithm>
+#include <functional>
 
 // xNVSE base integer types
 #include "common/ITypes.h"
+
+// xNVSE containers (UnorderedMap used in CommandTable.h)
+#include "nvse/nvse/containers.h"
